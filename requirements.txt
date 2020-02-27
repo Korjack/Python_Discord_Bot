@@ -1,0 +1,5 @@
+discord
+bs4
+pytube3
+PyNaCl
+ffmpeg
