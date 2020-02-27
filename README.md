@@ -36,7 +36,7 @@
   
   #### If it is a different operating system or does not support apt, you will have to find and do ffmpeg yourself.
   
-  #### 만일에 도커가 아닌 OS에서 구동하시게 된다면 apt를 사용하지 않는 OS는 저도 어떻게 해야할지 잘 모르니, ffmpeg는 알아서 설치바랍니다.
+  #### 만일에 도커가 아닌 다른 OS에서 구동하시게 된다면 apt를 사용하지 않는 OS는 저도 어떻게 해야할지 잘 모르니, ffmpeg는 알아서 설치바랍니다.
   
   1. Install python3(version=3.7.4) or use docker
   
