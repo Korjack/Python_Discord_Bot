@@ -37,8 +37,17 @@ async def try_stream_or_download(vc, video_url: str, fallback_audio_path: str, v
         if stream_url.startswith("http"):
             print("🎥 스트림 URL로 재생 중")
             ffmpeg_options = {
-                "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5 -re",
-                "options": f'-vn -af "aresample=async=1,afifo" -filter:a "volume={volume}"'
+                "before_options": (
+                    "-reconnect 1 "
+                    "-reconnect_streamed 1 "
+                    "-reconnect_delay_max 5 "
+                    "-probesize 32 "
+                    "-analyzeduration 0 "
+                ),
+                "options": (
+                    '-vn '
+                    f'-filter:a "volume={volume}"'
+                )
             }
             vc.play(discord.FFmpegPCMAudio(stream_url, **ffmpeg_options))
             return
