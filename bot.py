@@ -5,19 +5,19 @@ from core.client import BotClient
 from commands.youtube import run_youtube_command, stop_music
 from commands.memory import 기억해, 알려줘
 
-from config import BOT_TOKEN
+from config import BOT_TOKEN, DEFAULT_VOLUME
 
 client = BotClient()
 
 @client.tree.command(name="youtube", description="YouTube 영상 검색")
-@app_commands.describe(query="검색어", volume="음량 (0~100) / 기본값 5")
-async def youtube(interaction: discord.Interaction, query: str, volume: int = 2):
+@app_commands.describe(query="검색어", volume="음량 (0~100) / 기본값 2")
+async def youtube(interaction: discord.Interaction, query: str, volume: int = DEFAULT_VOLUME):
     await run_youtube_command(interaction, query, volume)
 
 @client.tree.command(name="재생", description="YouTube 영상 검색")
-@app_commands.describe(query="검색어")
-async def 재생(interaction: discord.Interaction, query: str):
-    await run_youtube_command(interaction, query)
+@app_commands.describe(query="검색어", volume="음량 (0~100) / 기본값 2")
+async def youtube(interaction: discord.Interaction, query: str, volume: int = DEFAULT_VOLUME):
+    await run_youtube_command(interaction, query, volume)
 
 @client.tree.command(name="stop", description="현재 재생 중인 음악을 중단합니다.")
 async def stop(interaction: discord.Interaction):

@@ -3,10 +3,14 @@ from datetime import timedelta
 from youtube.search import get_video_dict
 from ui.views import YouTubeView
 
+from config import DEFAULT_VOLUME
+
+
 def seconds_to_hms(seconds):
     return str(timedelta(seconds=seconds))
 
-async def run_youtube_command(interaction: discord.Interaction, query: str, volume: int = 2):
+
+async def run_youtube_command(interaction: discord.Interaction, query: str, volume: int = DEFAULT_VOLUME):
     await interaction.response.defer()
 
     video_dict = get_video_dict(query)
@@ -20,13 +24,14 @@ async def run_youtube_command(interaction: discord.Interaction, query: str, volu
     embed = discord.Embed(title=f"🔎 '{query}' 검색 결과", color=discord.Color.red())
     for i, video in enumerate(videos):
         embed.add_field(
-            name=f"{i+1}. {video['title']}",
+            name=f"{i + 1}. {video['title']}",
             value=f"[{seconds_to_hms(video['duration'])}]({video['url']})",
             inline=False
         )
 
     view = YouTubeView(videos, interaction.user, volume)
     await interaction.followup.send(embed=embed, view=view)
+
 
 async def stop_music(interaction: discord.Interaction):
     if not interaction.guild.voice_client:
