@@ -29,7 +29,7 @@ class CancelButton(discord.ui.Button):
         await interaction.response.send_message("🛑 선택이 취소되었습니다.", ephemeral=False)
 
 class YouTubeView(discord.ui.View):
-    def __init__(self, videos: list, interaction_user: discord.User, volume: int):
+    def __init__(self, videos: list, interaction_user: discord.User, volume: float):
         super().__init__(timeout=60)
         self.videos = videos
         self.interaction_user = interaction_user
@@ -42,7 +42,7 @@ class YouTubeView(discord.ui.View):
         self.add_item(CancelButton(interaction_user))
 
 class YouTubePlayButton(discord.ui.Button):
-    def __init__(self, index, video, user, volume: int):
+    def __init__(self, index, video, user, volume: float):
         super().__init__(
             label=f"{index+1}. {video['title'][:30]}",
             style=discord.ButtonStyle.primary,
@@ -77,10 +77,10 @@ class YouTubePlayButton(discord.ui.Button):
         audio_path = os.path.join(AUDIO_PATH, filename)
 
         # 음성 채널 접속
-        vc = await channel.connect()
+        vc = await channel.connect(self_deaf=True, self_mute=True)
 
         # 볼륨 계산 (0.0 ~ 1.0)
-        volume_level = max(0, min(self.volume, 100)) / 100
+        volume_level = max(0.0, min(self.volume, 100.0)) / 100
 
         # 스트리밍 시도, 실패하면 다운로드 후 재생
         await try_stream_or_download(vc, self.video["url"], audio_path, volume_level)

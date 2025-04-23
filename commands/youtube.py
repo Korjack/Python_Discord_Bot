@@ -10,7 +10,7 @@ def seconds_to_hms(seconds):
     return str(timedelta(seconds=seconds))
 
 
-async def run_youtube_command(interaction: discord.Interaction, query: str, volume: int = DEFAULT_VOLUME):
+async def run_youtube_command(interaction: discord.Interaction, query: str, volume: float = DEFAULT_VOLUME):
     await interaction.response.defer()
 
     video_dict = get_video_dict(query)
